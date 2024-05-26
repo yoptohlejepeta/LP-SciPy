@@ -1,4 +1,4 @@
-site_name: Tutoriál k řešení úloh lineárního programování pomocí SciPy
+site_name: PuLP tutoriál
 
 markdown_extensions:
   - toc:
