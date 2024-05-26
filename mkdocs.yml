@@ -1,0 +1,71 @@
+site_name: Tutoriál k řešení úloh lineárního programování pomocí SciPy
+
+markdown_extensions:
+  - toc:
+      title: Obsah
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.keys
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
+extra_css:
+  - https://unpkg.com/katex@0/dist/katex.min.css
+
+theme:
+  logo: ./images/prf_logo.svg
+  layout:
+    toc_position: left
+  features:
+      - content.code.copy
+      - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+  favicon: assets/none.svg
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+      primary: blue-grey
+      accent: teal
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+      primary: blue-grey
+      accent: teal
+
+plugins:
+  - search # search plugin musi byt specifikova. glightbox vypina
+  # - glightbox
+
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/yoptohlejepeta
+      name: yoptohlejepeta
