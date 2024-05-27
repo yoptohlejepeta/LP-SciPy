@@ -13,7 +13,7 @@
       
       
       
-      <link rel="icon" href="assets/none.svg">
+      <link rel="icon" href="images/logo.svg">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.24">
     
     
@@ -293,12 +293,7 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#vytvoreni-ulohy-linearniho-programovani" class="md-nav__link">
     <span class="md-ellipsis">
       Vytvoření úlohy lineárního programování
@@ -341,6 +336,11 @@
       LpConstraint
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -424,12 +424,7 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#vytvoreni-ulohy-linearniho-programovani" class="md-nav__link">
     <span class="md-ellipsis">
       Vytvoření úlohy lineárního programování
@@ -479,6 +474,11 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#reseni-ulohy" class="md-nav__link">
@@ -514,16 +514,34 @@
 
 
 <h1 id="reseni-uloh-linearniho-programovani-pomoci-knihovny-pulp"><strong>Řešení úloh lineárního programování pomocí knihovny PuLP</strong></h1>
-<p><u><strong>Vypracoval</strong></u>: Petr Kotlan</p>
 <!-- ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) -->
 
-<p>Tento tutoriál se zaměřuje na práci s knihovnou <code>PuLP</code>. <code>PuLP</code> je knihovna pro Python, která umožňuje řešit úlohy lineárního programování. Samotný materiál se problematikou lineárního programování nazabývá do hloubky. Předpokládá se základní znalost jazyka Python.</p>
+<p><strong>Vypracoval</strong>: Petr Kotlan</p>
+<p>Materiál vznikl v rámci bakalářské práce <em>Optimalizace investičních prostředků z hlediska výnosu fotovoltaických elektráren</em>.</p>
+<p>Tento tutoriál se zaměřuje na práci s knihovnou <strong>PuLP</strong>, která umožňuje řešit úlohy lineárního programování. Samotný materiál se problematikou lineárního programování nazabývá, pouze implementac9 a řešením úloh.
+Předpokládá se základní znalost jazyka Python.</p>
 <p>Zárověň se předpokládá, že čtenář umí pracovat s knihovnou <code>matplotlib</code>, která je využita pro vizualizaci výsledků.
  <!-- a s knihovnou `numpy`, která je využita pro práci s maticemi. -->
 </p>
+<!-- [Download :material-download:](index.txt){ .md-button } -->
+
 <h2 id="zaklady-pouziti-pulp"><strong>Základy použití PuLP</strong></h2>
+<p>V této části si ukážeme základní použití knihovny <strong>PuLP</strong> na jednoduchém příkladu. Jak pracovat s jednotlivými třídami, jak vytvořit úlohu lineárního programování a jak ji vyřešit.</p>
+<p>Pro názornost si vše vyzkoušíme na následujícím příkladu.</p>
+<div class="arithmatex">\[
+\begin{align*}
+\max \quad &amp; 600x_1 + 400x_2 \\
+\text{za podmínek} \quad &amp; x_1 + 0.25x_2 \leq 45 \\
+&amp; 2x_1 + 0.25x_2 \leq 45 \\
+&amp; 4x_1 + 2x_2 \leq 100 \\
+&amp; 3x_1 + x_2 \leq 300 \\
+&amp; x_1 + 4x_2 \leq 50 \\
+&amp; x_1, x_2 \geq 0
+\end{align*}
+\]</div>
+<p>Jen pro motivaci si představme, že se jedná o podnik vyrábějící dva druhy výrobků. Výrobek 1 má zisk 600 Kč a výrobek 2 má zisk 400 Kč. Dále máme několik omezení, například omezení výrobních kapacit, které jsou vyjádřeny v jednotkách výrobků. Cílem je maximalizovat zisk.</p>
 <h3 id="instalace-a-import">Instalace a import</h3>
-<p>Pro začátek je nutné nainstalovat knihovnu PuLP pomocí některého balíčkovacího systému pro Python. Následující příklady ukazují instalaci pomocí balíčkovacích systémů Pip, Conda a Poetry.</p>
+<p>Pro začátek je nutné nainstalovat knihovnu <strong>PuLP</strong> pomocí některého balíčkovacího systému pro Python. Následující příklady ukazují instalaci pomocí balíčkovacích systémů Pip, Conda a Poetry.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Pip</label><label for="__tabbed_1_2">Conda</label><label for="__tabbed_1_3">Poetry</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -540,7 +558,7 @@
 </div>
 </div>
 </div>
-<p>Následně je nutné knihovnu PuLP a další potřebné knihovny importovat.</p>
+<p>Následně je nutné knihovnu <strong>PuLP</strong> a další potřebné knihovny importovat.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> <span class="c1"># (1)!</span>
 </span></code></pre></div>
@@ -550,43 +568,145 @@
 <!-- import numpy as np # (2)!
 2. Knihovna pro práci s maticemi  -->
 
-<h2 id="vytvoreni-ulohy-linearniho-programovani"><strong>Vytvoření úlohy lineárního programování</strong></h2>
+<h3 id="vytvoreni-ulohy-linearniho-programovani"><strong>Vytvoření úlohy lineárního programování</strong></h3>
 <p>Model úlohy lineárního programování se skládá z několika částí.</p>
 <ul>
 <li><strong>LpProblem</strong> - Definice úlohy</li>
 <li><strong>LpVariable</strong> - Definice proměnných</li>
-<li><strong>LpAffineExpression</strong> - Definice účelové funkce</li>
+<li><strong>LpAffineExpression</strong> - Lineární kombinace proměnných</li>
 <li><strong>LpConstraint</strong> - Definice omezení</li>
 </ul>
-<h3 id="lpproblem">LpProblem</h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s2">&quot;Název úlohy&quot;</span><span class="p">,</span> <span class="n">LpMinimize</span><span class="p">)</span>
+<h4 id="lpproblem"><strong>LpProblem</strong></h4>
+<p>Základem celého problému je instance třídy <code>LpProblem</code>, která reprezentuje celou úlohu.
+Do této instance se následně přidávají proměnné, omezení a cílová funkce.
+Samotná třída <code>LpProblem</code> má dva nastavitelné parametry.</p>
+<ul>
+<li><code>name</code> - Název úlohy</li>
+<li><code>sense</code> - Typ optimalizace</li>
+</ul>
+<p>Parametr <code>name</code> není nijak důležitý pro samotnou optimalizaci. Má své využití při ukládání problému do souboru, které si ukážeme později.</p>
+<p>Parametr <code>sense</code> určuje o jaký typ optimalitace se jedná. Typ tohoto parametru je <code>int</code>, ale při řešení model vrátí chybovou hlášku, pokud <code>sense</code> není <code>1</code> nebo <code>-1</code>. <strong>PuLP</strong> má pro tento parametr připravené dvě konstanty <code>LpMinimize</code> a <code>LpMaximize</code>, které reprezentují minimalizaci a maximalizaci. Defaultní hodnota je <code>LpMinimize</code>.</p>
+<div class="language-python highlight"><span class="filename">Vytvoření instance třídy LpProblem</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s2">&quot;Max_výroby&quot;</span><span class="p">,</span> <span class="n">LpMaximize</span><span class="p">)</span> <span class="c1"># (1)!</span>
 </span></code></pre></div>
-<h3 id="lpvariable">LpVariable</h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">x1</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">x2</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s2">&quot;x2&quot;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="o">...</span>
+<ol>
+<li>Výtah z dokumentace. <a href="https://coin-or.github.io/pulp/technical/pulp.html#pulp.LpProblem">Odkaz na dokumentaci</a>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span> <span class="nc">LpProblem</span><span class="p">(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;NoName&quot;</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">sense</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">LpMinimize</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="p">)</span>
 </span></code></pre></div>
-<h3 id="lpaffineexpression">LpAffineExpression</h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">f</span> <span class="o">=</span> <span class="n">LpAffineExpression</span><span class="p">([(</span><span class="n">x1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">prob</span> <span class="o">+=</span> <span class="n">f</span>
-</span></code></pre></div>
-<h3 id="lpconstraint">LpConstraint</h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">c1</span> <span class="o">=</span> <span class="n">LpConstraint</span><span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">LE</span><span class="p">,</span> <span class="n">rhs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">c2</span> <span class="o">=</span> <span class="n">LpConstraint</span><span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">GE</span><span class="p">,</span> <span class="n">rhs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Creates an LP Problem
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>This function creates a new LP Problem with the specified associated parameters
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>:param name: name of the problem used in the output .lp file
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>:param sense: of the LP problem objective. Either ~pulp.const.LpMinimize (default) or ~pulp.const.LpMaximize.
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>:return: An LP Problem
+</span></code></pre></div></li>
+</ol>
+<p>Inicializovali jsme maximalizační problém s názvem <code>Max_výroby</code>.
+Třídá <code>LpProblem</code> má několik důležitých atributů a metod.</p>
+<p>Mezi důležité atributy patří:</p>
+<ul>
+<li><code>objective</code> - Cílová funkce problému</li>
+<li><code>constraints</code> - Seřazený slovník omezení</li>
+<li><code>status</code> - Stav řešení problému</li>
+</ul>
+<p>Důležité metody:</p>
+<ul>
+<li><code>solve()</code> - Vyřeší daný problém</li>
+<li><code>variables()</code> - Vrátí seznam proměnných</li>
+<li><code>toDict()</code> nebo <code>to_dict()</code> - Vrátí slovník s výsledky</li>
+</ul>
+<p>Co vrací jednotlivé metody a atributy si zatím neukážeme, protože jsme zatím problému nepřiřadili žádné proměnné, omezení ani cílovou funkci. Vrátím se k nim později.</p>
+<h4 id="lpvariable"><strong>LpVariable</strong></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">x1</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># (1)!</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">x2</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s2">&quot;x2&quot;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="o">...</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">prob</span> <span class="o">+=</span> <span class="n">c1</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">prob</span> <span class="o">+=</span> <span class="n">c2</span>
 </span></code></pre></div>
+<ol>
+<li>Výtah z dokumentace. <a href="https://coin-or.github.io/pulp/technical/pulp.html#pulp.LpVariable">Odkaz na dokumentaci</a>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">class</span> <span class="nc">LpVariable</span><span class="p">(</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">lowBound</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">upBound</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="n">cat</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">LpContinuous</span><span class="p">,</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="n">e</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>This class models an LP Variable with the specified associated parameters
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>:param name: The name of the variable used in the output .lp file
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>:param lowBound: The lower bound on this variable&#39;s range.
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    Default is negative infinity
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>:param upBound: The upper bound on this variable&#39;s range.
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    Default is positive infinity
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>:param cat: The category this variable is in, Integer, Binary or
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    Continuous(default)
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>:param e: Used for column based modelling: relates to the variable&#39;s
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    existence in the objective function and constraints
+</span></code></pre></div></li>
+</ol>
+<h4 id="lpaffineexpression"><strong>LpAffineExpression</strong></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">f</span> <span class="o">=</span> <span class="n">LpAffineExpression</span><span class="p">([(</span><span class="n">x1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span> <span class="c1"># (1)!</span>
+</span></code></pre></div>
+<ol>
+<li>Výtah z dokumentace. <a href="https://coin-or.github.io/pulp/technical/pulp.html#pulp.LpAffineExpression">Odkaz na dokumentaci</a>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span> <span class="nc">LpAffineExpression</span><span class="p">(</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="n">e</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="n">constant</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">name</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>A linear combination of LpVariables&lt;LpVariable&gt;. Can be initialised with the following:
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="gh">#. e = None: an empty Expression</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="gh">#. e = dict: gives an expression with the values being the coefficients of the keys (order of terms is undetermined)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="gh">#. e = list or generator of 2-tuples: equivalent to dict.items()</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="gh">#. e = LpElement: an expression of length 1 with the coefficient 1</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="gh">#. e = other: the constant is initialised as e</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>Examples:
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>&gt;&gt;&gt; f=LpAffineExpression(LpElement(&#39;x&#39;))
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>&gt;&gt;&gt; f
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>1*x + 0
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>&gt;&gt;&gt; x<span class="ge">_name = [&#39;x_</span>0&#39;, &#39;x_1&#39;, &#39;x_2&#39;]
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>&gt;&gt;&gt; x = [LpVariable(x_name[i], lowBound = 0, upBound = 10) for i in range(3) ]
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>&gt;&gt;&gt; c = LpAffineExpression([ (x[0],1), (x[1],-3), (x[2],4)])
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>&gt;&gt;&gt; c
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>1<span class="ge">*x_0 + -3*</span>x<span class="ge">_1 + 4*x_</span>2 + 0
+</span></code></pre></div></li>
+</ol>
+<h4 id="lpconstraint"><strong>LpConstraint</strong></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">c1</span> <span class="o">=</span> <span class="n">LpConstraint</span><span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">LE</span><span class="p">,</span> <span class="n">rhs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="c1"># (1)!</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">c2</span> <span class="o">=</span> <span class="n">LpConstraint</span><span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">GE</span><span class="p">,</span> <span class="n">rhs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="o">...</span>
+</span></code></pre></div>
+<ol>
+<li>Výtah z dokumentace. <a href="https://coin-or.github.io/pulp/technical/pulp.html#pulp.LpConstraint">Odkaz na dokumentaci</a>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">class</span> <span class="nc">LpConstraint</span><span class="p">(</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    <span class="n">e</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="n">sense</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">LpConstraintEQ</span><span class="p">,</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    <span class="n">name</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    <span class="n">rhs</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>:param e: an instance of LpAffineExpression
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>:param sense: one of ~pulp.const.LpConstraintEQ, ~pulp.const.LpConstraintGE, ~pulp.const.LpConstraintLE (0, 1, -1 respectively)
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>:param name: identifying string
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>:param rhs: numerical value of constraint target
+</span></code></pre></div></li>
+</ol>
 <h2 id="reseni-ulohy">Řešení úlohy</h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">status</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">status</span><span class="p">])</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x1 = </span><span class="si">{</span><span class="n">value</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span><span class="si">}</span><span class="s2">, x2 = </span><span class="si">{</span><span class="n">value</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimalizovaná hodnota: </span><span class="si">{</span><span class="n">value</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">objective</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">status</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">status</span><span class="p">])</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x1 = </span><span class="si">{</span><span class="n">value</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span><span class="si">}</span><span class="s2">, x2 = </span><span class="si">{</span><span class="n">value</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimalizovaná hodnota: </span><span class="si">{</span><span class="n">value</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">objective</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<div class="language-text highlight"><span class="filename">Output</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Optimal
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>x1 = 0.0, x2 = 0.0
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Optimalizovaná hodnota: 0.0
+<div class="language-text highlight"><span class="filename">Output</span><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Optimal
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>x1 = 0.0, x2 = 0.0
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>Optimalizovaná hodnota: 0.0
 </span></code></pre></div>
 <h2 id="priklady">Příklady</h2>
 
