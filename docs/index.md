@@ -3,7 +3,7 @@ hide:
   - navigation
 ---
 
-# Tutoriál k řešení úloh lineárního programování pomocí knihovny PuLP
+# Řešení úloh lineárního programování pomocí knihovny PuLP
 
 <!-- ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) -->
 
@@ -93,10 +93,10 @@ print(f"x1 = {value(x1)}, x2 = {value(x2)}")
 print(f"Optimalizovaná hodnota: {value(prob.objective)}")
 ```
 
-```plaintext
-> Optimal
-> x1 = 0.0, x2 = 0.0
-> Optimalizovaná hodnota: 0.0
+```plaintext title="Output"
+Optimal
+x1 = 0.0, x2 = 0.0
+Optimalizovaná hodnota: 0.0
 ```
 
 ### Řešení úlohy
@@ -108,7 +108,7 @@ print(f"x1 = {value(x1)}, x2 = {value(x2)}")
 print(f"Optimalizovaná hodnota: {value(prob.objective)}")
 ```
 
-```plaintext
+```plaintext title="Output"
 Optimal
 x1 = 0.0, x2 = 0.0
 Optimalizovaná hodnota: 0.0
