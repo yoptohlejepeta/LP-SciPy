@@ -40,7 +40,7 @@ theme:
       - content.code.annotate
   icon:
     repo: fontawesome/brands/github
-  favicon: assets/none.svg
+  favicon: images/logo.svg
   name: material
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -57,7 +57,7 @@ theme:
         icon: material/lightbulb-outline
         name: Switch to light mode
       primary: black
-      accent: teal
+      accent: lime
 
 plugins:
   - search # search plugin musi byt specifikova. glightbox vypina
