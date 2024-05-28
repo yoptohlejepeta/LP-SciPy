@@ -527,19 +527,6 @@ Předpokládá se základní znalost jazyka Python.</p>
 
 <h2 id="zaklady-pouziti-pulp"><strong>Základy použití PuLP</strong></h2>
 <p>V této části si ukážeme základní použití knihovny <strong>PuLP</strong> na jednoduchém příkladu. Jak pracovat s jednotlivými třídami, jak vytvořit úlohu lineárního programování a jak ji vyřešit.</p>
-<p>Pro názornost si vše vyzkoušíme na následujícím příkladu.</p>
-<div class="arithmatex">\[
-\begin{align*}
-\max \quad &amp; 600x_1 + 400x_2 \\
-\text{za podmínek} \quad &amp; x_1 + 0.25x_2 \leq 45 \\
-&amp; 2x_1 + 0.25x_2 \leq 45 \\
-&amp; 4x_1 + 2x_2 \leq 100 \\
-&amp; 3x_1 + x_2 \leq 300 \\
-&amp; x_1 + 4x_2 \leq 50 \\
-&amp; x_1, x_2 \geq 0
-\end{align*}
-\]</div>
-<p>Jen pro motivaci si představme, že se jedná o podnik vyrábějící dva druhy výrobků. Výrobek 1 má zisk 600 Kč a výrobek 2 má zisk 400 Kč. Dále máme několik omezení, například omezení výrobních kapacit, které jsou vyjádřeny v jednotkách výrobků. Cílem je maximalizovat zisk.</p>
 <h3 id="instalace-a-import">Instalace a import</h3>
 <p>Pro začátek je nutné nainstalovat knihovnu <strong>PuLP</strong> pomocí některého balíčkovacího systému pro Python. Následující příklady ukazují instalaci pomocí balíčkovacích systémů Pip, Conda a Poetry.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Pip</label><label for="__tabbed_1_2">Conda</label><label for="__tabbed_1_3">Poetry</label></div>
@@ -576,6 +563,19 @@ Předpokládá se základní znalost jazyka Python.</p>
 <li><strong>LpAffineExpression</strong> - Lineární kombinace proměnných</li>
 <li><strong>LpConstraint</strong> - Definice omezení</li>
 </ul>
+<p>Pro názornost si vše vyzkoušíme na následujícím příkladu.</p>
+<div class="arithmatex">\[
+\begin{align*}
+\max \quad &amp; 600x_1 + 400x_2 \\
+\text{za podmínek} \quad &amp; x_1 + 0.25x_2 \leq 45 \\
+&amp; 2x_1 + 0.25x_2 \leq 45 \\
+&amp; 4x_1 + 2x_2 \leq 100 \\
+&amp; 3x_1 + x_2 \leq 300 \\
+&amp; x_1 + 4x_2 \leq 50 \\
+&amp; x_1, x_2 \geq 0
+\end{align*}
+\]</div>
+<p>Pro motivaci si představme, že se jedná o podnik vyrábějící dva druhy výrobků. Výrobek 1 má zisk 600 Kč a výrobek 2 má zisk 400 Kč. Dále máme několik omezení, například omezení výrobních kapacit, které jsou vyjádřeny v jednotkách výrobků. Cílem je maximalizovat zisk.</p>
 <h4 id="lpproblem"><strong>LpProblem</strong></h4>
 <p>Základem celého problému je instance třídy <code>LpProblem</code>, která reprezentuje celou úlohu.
 Do této instance se následně přidávají proměnné, omezení a cílová funkce.
